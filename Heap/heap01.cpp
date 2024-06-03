@@ -38,6 +38,37 @@ class Heap{
         }
 
     }
+
+    int deleteFromHeap(){
+        int ans = arr[1]; //ye root hai ise delete karna hai return kar dunga
+        arr[1] = arr[size];
+        size--;
+
+        int index = 1;
+        while(index < size){
+            int leftKaIndex = 2 * index;
+            int rightKaIndex = 2 * index + 1;
+            int largestKaIndex = index;
+
+            //checking who is maximum among all three
+            if(leftKaIndex <= size && arr[leftKaIndex]>arr[index]){
+                largestKaIndex = leftKaIndex;
+            }
+            if(rightKaIndex <= size && arr[rightKaIndex]>arr[largestKaIndex]){ //very important
+                largestKaIndex = rightKaIndex;
+            }
+
+            if(index == largestKaIndex){
+                break;
+            }
+            else{
+                swap(arr[largestKaIndex],arr[index]);
+                index = largestKaIndex;
+            }
+        }
+        return ans;
+    }
+
     //1 based indexing
     void printHeap(){
         for(int i = 1 ; i <= size ; i++){
@@ -47,6 +78,7 @@ class Heap{
     }
 };
 
+
 int main (){
     Heap h1(20); //here 20 is capacity
     h1.insertInHeap(10);
@@ -55,7 +87,15 @@ int main (){
     h1.insertInHeap(11);
     h1.insertInHeap(6);
 
-    cout<<"Printig the Heap content"<<endl;
+    // cout<<"Printig the Heap content"<<endl;
+    // h1.printHeap();
+
+    cout<<"Printing before deletion"<<endl;
+    h1.printHeap();
+
+    h1.deleteFromHeap();
+
+    cout<<"Printing After deletion"<<endl;
     h1.printHeap();
 
     return 0;
